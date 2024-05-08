@@ -5,5 +5,6 @@
 //  Created by Zaid Rahhawi on 2/22/24.
 //
 
-#define PJ_AUTOCONF 1
-#include "VialerPJSIP/pjsua.h"
+//#define PJ_AUTOCONF 1
+
+#include "pjsua.h"

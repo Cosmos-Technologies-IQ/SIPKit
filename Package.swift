@@ -9,12 +9,27 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(name: "SIPKit", targets: ["SIPKit"]),
+        .library(name: "Vialer", targets: ["Vialer"]),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
-        .target(name: "SIPKit", dependencies: ["C"], path: "Sources/SIPKit"),
-        .target(name: "C", dependencies: ["VialerPJSIP"], path: "Sources/C"),
-        .binaryTarget(name: "VialerPJSIP", path: "Libraries/VialerPJSIP.xcframework")
+        .target(name: "Vialer",
+                dependencies: ["CTSIP", "Reachability", "CocoalumberJack"],
+                path: "Sources/VialerSIPLib",
+                cSettings: [
+                    .headerSearchPath("../.."),
+                    .define("PJ_AUTOCONF"),
+                ],
+                linkerSettings: [
+                    .linkedLibrary("UIKit", .when(platforms: [.iOS])),
+                ]),
+        
+        .target(name: "SIPKit", dependencies: ["C"], path: "Sources/SIPKit", cSettings: [.define("PJ_AUTOCONF")]),
+        .target(name: "C", dependencies: ["CTSIP"], path: "Sources/C", cSettings: [.define("PJ_AUTOCONF")]),
+        .target(name: "Reachability", path: "Sources/Dependencies/Reachability"),
+        .target(name: "CocoalumberJack", path: "Sources/Dependencies/CocoalumberJack"),
+        
+        .binaryTarget(name: "CTSIP", path: "Libraries/CTSIP.xcframework"),
     ]
 )
