@@ -8,28 +8,40 @@ let package = Package(
     platforms: [.iOS(.v13)],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(name: "SIPKit", targets: ["SIPKit"]),
+//        .library(name: "SIPKit", targets: ["SIPKit"]),
         .library(name: "Vialer", targets: ["Vialer"]),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
+        .target(name: "SIPKit",
+                dependencies: ["C"],
+                path: "Sources/SIPKit",
+                cSettings: [
+                    .define("PJ_AUTOCONF")
+                ]),
+        
         .target(name: "Vialer",
-                dependencies: ["CTSIP", "Reachability", "CocoalumberJack"],
+                dependencies: ["CTPJSIP", "Reachability", "CocoalumberJack"],
                 path: "Sources/VialerSIPLib",
+                publicHeadersPath: "Classes",
                 cSettings: [
                     .headerSearchPath("../.."),
                     .define("PJ_AUTOCONF"),
-                ],
-                linkerSettings: [
-                    .linkedLibrary("UIKit", .when(platforms: [.iOS])),
                 ]),
         
-        .target(name: "SIPKit", dependencies: ["C"], path: "Sources/SIPKit", cSettings: [.define("PJ_AUTOCONF")]),
-        .target(name: "C", dependencies: ["CTSIP"], path: "Sources/C", cSettings: [.define("PJ_AUTOCONF")]),
-        .target(name: "Reachability", path: "Sources/Dependencies/Reachability"),
-        .target(name: "CocoalumberJack", path: "Sources/Dependencies/CocoalumberJack"),
+        .target(name: "C",
+                dependencies: ["CTPJSIP"],
+                path: "Sources/C",
+                cSettings: [
+                    .define("PJ_AUTOCONF")
+                ]),
         
-        .binaryTarget(name: "CTSIP", path: "Libraries/CTSIP.xcframework"),
+        .target(name: "Reachability",
+                path: "Sources/Dependencies/Reachability"),
+        
+        .target(name: "CocoalumberJack",
+                path: "Sources/Dependencies/CocoalumberJack"),
+        
+        .binaryTarget(name: "CTPJSIP",
+                      path: "Libraries/CTPJSIP.xcframework"),
     ]
 )
