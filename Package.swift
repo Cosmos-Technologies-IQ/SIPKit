@@ -42,6 +42,7 @@ let package = Package(
                 path: "Sources/Dependencies/CocoalumberJack"),
         
         .binaryTarget(name: "CTPJSIP",
-                      path: "Libraries/CTPJSIP.xcframework"),
+                      url: "https://github.com/Cosmos-Technologies-IQ/CTPJSIP/releases/download/v2.14.1/CTPJSIP.xcframework.zip",
+                      checksum: "ecdb91aa9f9a69ec97a9a742b1c2a9656cfb8591858ab1f4a984c456adfbf351"),
     ]
 )
