@@ -17,6 +17,7 @@
 #import "VSLIpChangeConfiguration.h"
 #import "VSLTransportConfiguration.h"
 #import "VSLVideoCodecs.h"
+#import "UIKit/UIKit.h"
 
 static NSString * const VSLEndpointErrorDomain = @"VialerSIPLib.VSLEndpoint.error";
 
