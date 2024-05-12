@@ -26,6 +26,9 @@ let package = Package(
                 cSettings: [
                     .headerSearchPath("../.."),
                     .define("PJ_AUTOCONF"),
+                ],
+                linkerSettings: [
+                    .linkedLibrary("c++")
                 ]),
         
         .target(name: "C",
