@@ -113,6 +113,14 @@ static NSString * const VSLAccountErrorDomain = @"VialerSIPLib.VSLAccount";
     pjsua_acc_config acc_cfg;
     pjsua_acc_config_default(&acc_cfg);
     
+    // MARK: - Disable Timers
+    // Disable session timers because servers are not always reliable.
+    // By default, a Session-Expire header instructs the client to
+    // send a request to the server and expects a 200 OK response code
+    // to update the Session-Expire header, but servers may fail to do
+    // so.
+    acc_cfg.use_timer = PJSUA_SIP_TIMER_INACTIVE;
+    
     // Add sip information to the pjsua account configuration.
     acc_cfg.id = [[accountConfiguration.sipAddress stringByAppendingString:transportString] prependSipUri].pjString;
     acc_cfg.reg_uri = [[accountConfiguration.sipDomain stringByAppendingString:transportString] prependSipUri].pjString;
