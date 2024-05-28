@@ -22,6 +22,9 @@ let package = Package(
         .target(name: "Vialer",
                 dependencies: ["CTPJSIP", "Reachability", "CocoalumberJack"],
                 path: "Sources/VialerSIPLib",
+                resources: [
+                    .process("Resources/disconnected.wav")
+                ],
                 publicHeadersPath: "Classes",
                 cSettings: [
                     .headerSearchPath("../.."),

@@ -299,15 +299,11 @@ NSString * const VSLCallErrorDuringSetupCallNotification = @"VSLCallErrorDuringS
 }
 
 - (AVAudioPlayer *)disconnectedSoundPlayer {
+    // FIXME: - Can't access the module's bundle from Objective-C...
     if (!_disconnectedSoundPlayer) {
-        NSBundle *podBundle = [NSBundle bundleForClass:self.classForCoder];
-        NSBundle *vialerBundle = [NSBundle bundleWithURL:[podBundle URLForResource:@"VialerSIPLib" withExtension:@"bundle"]];
-        NSURL *disconnectedSound = [vialerBundle URLForResource:@"disconnected" withExtension:@"wav"];
-        NSAssert(disconnectedSound, @"No sound available");
-        NSError *error;
-        _disconnectedSoundPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:disconnectedSound error:&error];
+        _disconnectedSoundPlayer = [[AVAudioPlayer alloc] init];
         _disconnectedSoundPlayer.volume = 1.0f;
-        [_disconnectedSoundPlayer prepareToPlay];
+        // You can optionally prepare the player to play here, but it won't play without a valid sound file
     }
     return _disconnectedSoundPlayer;
 }
